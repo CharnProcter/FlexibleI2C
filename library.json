@@ -1,0 +1,34 @@
+{
+    "name": "FlexibleI2C",
+    "version": "1.0.0",
+    "description": "A flexible I2C library for ESP32 supporting up to 2 buses with extensible command interface",
+    "keywords": "esp32, i2c, bus, communication, extensible, automation",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/CharnProcter/FlexibleI2C.git"
+    },
+    "authors": [
+        {
+            "name": "Charn Procter",
+            "maintainer": true
+        }
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/CharnProcter/FlexibleI2C",
+    "dependencies": [
+        {
+            "name": "Wire",
+            "version": "*"
+        },
+        {
+            "name": "FlexibleEndpoints",
+            "version": "https://github.com/CharnProcter/FlexibleEndpoints.git"
+        },
+        {
+            "name": "ArduinoJson",
+            "version": "^6.21.2"
+        }
+    ],
+    "frameworks": "arduino",
+    "platforms": "espressif32"
+}
