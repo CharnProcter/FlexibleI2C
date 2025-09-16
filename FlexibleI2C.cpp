@@ -351,7 +351,7 @@ bool FlexibleI2C::validateBusAndAddress(uint8_t bus_id, uint8_t address) {
 
 void FlexibleI2C::registerBuiltinEndpoints(FlexibleEndpoints& endpoints) {
     endpoints.addEndpoint(FLEXIBLE_ENDPOINT()
-        .route("/i2c/init")
+        .route("/initI2C")
         .summary("Initialize I2C bus")
         .description("Initialize an I2C bus with specified pins and frequency")
         .params({
@@ -367,7 +367,7 @@ void FlexibleI2C::registerBuiltinEndpoints(FlexibleEndpoints& endpoints) {
     );
 
     endpoints.addEndpoint(FLEXIBLE_ENDPOINT()
-        .route("/i2c/scan")
+        .route("/scanI2C")
         .summary("Scan I2C bus for devices")
         .description("Scan the specified I2C bus for responsive devices")
         .params({
@@ -380,7 +380,7 @@ void FlexibleI2C::registerBuiltinEndpoints(FlexibleEndpoints& endpoints) {
     );
 
     endpoints.addEndpoint(FLEXIBLE_ENDPOINT()
-        .route("/i2c/devices")
+        .route("/getI2CDevices")
         .summary("Get all known devices")
         .description("Get information about all known I2C devices")
         .responseType(JSON_RESPONSE)
@@ -390,7 +390,7 @@ void FlexibleI2C::registerBuiltinEndpoints(FlexibleEndpoints& endpoints) {
     );
 
     endpoints.addEndpoint(FLEXIBLE_ENDPOINT()
-        .route("/i2c/read")
+        .route("/readI2C")
         .summary("Read register from device")
         .description("Read a register value from an I2C device")
         .params({
@@ -405,7 +405,7 @@ void FlexibleI2C::registerBuiltinEndpoints(FlexibleEndpoints& endpoints) {
     );
 
     endpoints.addEndpoint(FLEXIBLE_ENDPOINT()
-        .route("/i2c/write")
+        .route("/writeI2C")
         .summary("Write register to device")
         .description("Write a value to a register on an I2C device")
         .params({
@@ -421,7 +421,7 @@ void FlexibleI2C::registerBuiltinEndpoints(FlexibleEndpoints& endpoints) {
     );
 
     endpoints.addEndpoint(FLEXIBLE_ENDPOINT()
-        .route("/i2c/ping")
+        .route("/pingI2C")
         .summary("Ping I2C device")
         .description("Check if an I2C device is responding")
         .params({
@@ -435,7 +435,7 @@ void FlexibleI2C::registerBuiltinEndpoints(FlexibleEndpoints& endpoints) {
     );
 
     endpoints.addEndpoint(FLEXIBLE_ENDPOINT()
-        .route("/i2c/read_bytes")
+        .route("/readI2CBytes")
         .summary("Read multiple bytes from device")
         .description("Read multiple bytes from a register on an I2C device")
         .params({
@@ -451,7 +451,7 @@ void FlexibleI2C::registerBuiltinEndpoints(FlexibleEndpoints& endpoints) {
     );
 
     endpoints.addEndpoint(FLEXIBLE_ENDPOINT()
-        .route("/i2c/write_bytes")
+        .route("/writeI2CBytes")
         .summary("Write multiple bytes to device")
         .description("Write multiple bytes to a register on an I2C device")
         .params({

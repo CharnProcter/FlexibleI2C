@@ -15,14 +15,14 @@ A flexible I2C library for ESP32 supporting up to 2 buses with extensible HTTP e
 
 ## HTTP Endpoints
 
-- `POST /i2c/init` - Initialize I2C bus
-- `GET /i2c/scan?bus_id=0` - Scan bus for devices
-- `GET /i2c/devices` - List all known devices
-- `GET /i2c/read?bus_id=0&device_addr=0x48&reg_addr=0x00` - Read register
-- `POST /i2c/write` - Write register
-- `GET /i2c/ping?bus_id=0&device_addr=0x48` - Ping device
-- `GET /i2c/read_bytes` - Read multiple bytes
-- `POST /i2c/write_bytes` - Write multiple bytes
+- `POST /initI2C` - Initialize I2C bus
+- `GET /scanI2C?bus_id=0` - Scan bus for devices
+- `GET /getI2CDevices` - List all known devices
+- `GET /readI2C?bus_id=0&device_addr=0x48&reg_addr=0x00` - Read register
+- `POST /writeI2C` - Write register
+- `GET /pingI2C?bus_id=0&device_addr=0x48` - Ping device
+- `GET /readI2CBytes` - Read multiple bytes
+- `POST /writeI2CBytes` - Write multiple bytes
 
 ## Usage
 
