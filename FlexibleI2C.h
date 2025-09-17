@@ -108,8 +108,8 @@ protected:
     std::pair<String, int> handleWriteBytes(std::map<String, String>& params);
 
     // Helper methods
-    JsonDocument deviceInfoToJson(const I2CDeviceInfo& device);
-    JsonDocument busConfigToJson(uint8_t bus_id);
+    DynamicJsonDocument deviceInfoToJson(const I2CDeviceInfo& device);
+    DynamicJsonDocument busConfigToJson(uint8_t bus_id);
 };
 
 #endif // FLEXIBLE_I2C_H

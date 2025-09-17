@@ -4,7 +4,8 @@ FlexibleI2C::FlexibleI2C() : i2c_timeout(1000), last_error(SUCCESS), endpoints_p
 }
 
 FlexibleI2C::~FlexibleI2C() {
-    for (auto& [bus_id, config] : buses) {
+    for (auto& bus_pair : buses) {
+        I2CBusConfig& config = bus_pair.second;
         if (config.initialized && config.wire_instance) {
             config.wire_instance->end();
         }
@@ -468,7 +469,7 @@ void FlexibleI2C::registerBuiltinEndpoints(FlexibleEndpoints& endpoints) {
 }
 
 std::pair<String, int> FlexibleI2C::handleInitBus(std::map<String, String>& params) {
-    JsonDocument response;
+    DynamicJsonDocument response(1024);
 
     if (params.find("bus_id") == params.end() || params.find("sda_pin") == params.end() || params.find("scl_pin") == params.end()) {
         response["success"] = false;
@@ -501,7 +502,7 @@ std::pair<String, int> FlexibleI2C::handleInitBus(std::map<String, String>& para
 }
 
 std::pair<String, int> FlexibleI2C::handleScanBus(std::map<String, String>& params) {
-    JsonDocument response;
+    DynamicJsonDocument response(1024);
 
     if (params.find("bus_id") == params.end()) {
         response["success"] = false;
@@ -535,7 +536,7 @@ std::pair<String, int> FlexibleI2C::handleScanBus(std::map<String, String>& para
 }
 
 std::pair<String, int> FlexibleI2C::handleDeviceInfo(std::map<String, String>& params) {
-    JsonDocument response;
+    DynamicJsonDocument response(1024);
 
     response["success"] = true;
     response["device_count"] = known_devices.size();
@@ -557,7 +558,7 @@ std::pair<String, int> FlexibleI2C::handleDeviceInfo(std::map<String, String>& p
 }
 
 std::pair<String, int> FlexibleI2C::handleReadRegister(std::map<String, String>& params) {
-    JsonDocument response;
+    DynamicJsonDocument response(1024);
 
     if (params.find("bus_id") == params.end() || params.find("device_addr") == params.end() || params.find("reg_addr") == params.end()) {
         response["success"] = false;
@@ -592,7 +593,7 @@ std::pair<String, int> FlexibleI2C::handleReadRegister(std::map<String, String>&
 }
 
 std::pair<String, int> FlexibleI2C::handleWriteRegister(std::map<String, String>& params) {
-    JsonDocument response;
+    DynamicJsonDocument response(1024);
 
     if (params.find("bus_id") == params.end() || params.find("device_addr") == params.end() ||
         params.find("reg_addr") == params.end() || params.find("value") == params.end()) {
@@ -626,7 +627,7 @@ std::pair<String, int> FlexibleI2C::handleWriteRegister(std::map<String, String>
 }
 
 std::pair<String, int> FlexibleI2C::handlePingDevice(std::map<String, String>& params) {
-    JsonDocument response;
+    DynamicJsonDocument response(1024);
 
     if (params.find("bus_id") == params.end() || params.find("device_addr") == params.end()) {
         response["success"] = false;
@@ -652,7 +653,7 @@ std::pair<String, int> FlexibleI2C::handlePingDevice(std::map<String, String>& p
 }
 
 std::pair<String, int> FlexibleI2C::handleReadBytes(std::map<String, String>& params) {
-    JsonDocument response;
+    DynamicJsonDocument response(1024);
 
     if (params.find("bus_id") == params.end() || params.find("device_addr") == params.end() ||
         params.find("reg_addr") == params.end() || params.find("length") == params.end()) {
@@ -700,7 +701,7 @@ std::pair<String, int> FlexibleI2C::handleReadBytes(std::map<String, String>& pa
 }
 
 std::pair<String, int> FlexibleI2C::handleWriteBytes(std::map<String, String>& params) {
-    JsonDocument response;
+    DynamicJsonDocument response(1024);
 
     if (params.find("bus_id") == params.end() || params.find("device_addr") == params.end() ||
         params.find("reg_addr") == params.end() || params.find("data") == params.end()) {
@@ -761,8 +762,8 @@ std::pair<String, int> FlexibleI2C::handleWriteBytes(std::map<String, String>& p
     return {output, success ? 200 : 500};
 }
 
-JsonDocument FlexibleI2C::deviceInfoToJson(const I2CDeviceInfo& device) {
-    JsonDocument doc;
+DynamicJsonDocument FlexibleI2C::deviceInfoToJson(const I2CDeviceInfo& device) {
+    DynamicJsonDocument doc(512);
     doc["bus_id"] = device.bus_id;
     doc["address"] = device.address;
     doc["address_hex"] = "0x" + String(device.address, HEX);
@@ -772,8 +773,8 @@ JsonDocument FlexibleI2C::deviceInfoToJson(const I2CDeviceInfo& device) {
     return doc;
 }
 
-JsonDocument FlexibleI2C::busConfigToJson(uint8_t bus_id) {
-    JsonDocument doc;
+DynamicJsonDocument FlexibleI2C::busConfigToJson(uint8_t bus_id) {
+    DynamicJsonDocument doc(512);
     auto it = buses.find(bus_id);
     if (it != buses.end()) {
         doc["bus_id"] = bus_id;
